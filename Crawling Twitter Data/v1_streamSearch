@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     try:
         #stream.filter(languages=['en'], track = ['covid, coronavirus'])
-        stream.filter(languages=['en'], track=['covid', 'coronavirus'], locations=[144.3340,-38.5030,145.8780,-37.1760])
+        stream.filter(languages=['en'], track=['covid', 'coronavirus'], locations=[144.312,-38.506,145.894,-37.160])
 
         print("Start streaming.")
 

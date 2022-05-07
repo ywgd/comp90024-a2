@@ -11,7 +11,7 @@ class listener(tw.Stream):
 
     def on_data(self, data):
 
-        with open('twitterxiao1', 'a', encoding='utf-8') as tf:
+        with open('twitterdata.json', 'a', encoding='utf-8') as tf:
             json_data = json.loads(data)
 
             is_not_retweeted = False

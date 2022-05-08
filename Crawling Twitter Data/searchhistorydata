@@ -47,7 +47,7 @@ search_words = ["covid"]
 tweets = tweepy.Cursor(api.search_tweets, q = search_words,
                        # geocode = "-37.840935, 144.946457, 1000km",
                        lang = "en").items(10)
-## the geocode is for India; format for geocode="lattitude,longitude,radius"
+## the geocode is for Melb; format for geocode="lattitude,longitude,radius"
 ## radius should be in miles or km
 
 

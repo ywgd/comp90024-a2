@@ -30,9 +30,23 @@ class listener(tw.Stream):
                 has_place = True
 
             if is_not_retweeted and is_not_quoted and has_place:
-                print("Succeed!")
+                if "extended_tweet" in json_data:
+                    print("------------------ start extended ------------------")
+                    #print(json_data['extended_tweet'])
+                    #print("=====================================")
+                    temp_text = json_data['extended_tweet']['full_text']
+                    print(temp_text)
+                    print("=====================================")
+                    json_data['text'] = temp_text
+                    print(json_data['text'])
+                    print("------------------ end extended ------------------")                
+                    #print("Extended text: succeed!")
+                else:
+                    print("No extended text: succeed!")
+                    
                 tf.write('\n')                
                 json.dump(json_data, tf)
+                print("==================================== succeed in writing file ====================================")
 
     
     def on_error(self, status):

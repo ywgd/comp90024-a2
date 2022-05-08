@@ -20,14 +20,17 @@ class listener(tw.Stream):
             if ("retweeted_status" not in json_data) and ('RT @' not in json_data['text']):
                 # this is for not retweeted only
                 is_not_retweeted = True
-            elif "quoted_status" not in json_data:
+            
+            if "quoted_status" not in json_data:
                 # this is for not quoted only
                 is_not_quoted = True
-            elif json_data['place'] != None:
+            
+            if json_data['place'] != None:
                 # check if the value of place is None or not
                 has_place = True
 
             if is_not_retweeted and is_not_quoted and has_place:
+                print("Succeed!")
                 tf.write('\n')                
                 json.dump(json_data, tf)
 

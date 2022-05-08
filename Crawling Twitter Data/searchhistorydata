@@ -1,0 +1,56 @@
+
+import tweepy as tw
+
+bearer_token = "AAAAAAAAAAAAAAAAAAAAACAQbwEAAAAAMMc5leYe2RxXTUO4xNKAhSp9DuI%3D3AI6uRezA6X1teJIzd0WYMh53nIjyE421lYPj4o9RPJNmEeRgY"
+client = tw.Client(bearer_token)
+
+query = 'covid -is:retweet'
+end_time = '2022-05-01T15:46:00Z'
+
+# print("-----------------------------------------------")
+response = client.search_recent_tweets(query = query, tweet_fields=['context_annotations', 'created_at', 'geo'], place_fields=['place_type', 'geo'], expansions='geo.place_id', end_time = end_time)
+print("-----------------------------------------------")
+# places = {p["id"]: p for p in response.includes['places']}
+# print(response.meta)
+# print("-----------------------------------------------")
+
+tweets = response.data
+for tweet in tweets:
+    # print(tweet.id)
+    # print(tweet.text)
+    # print(tweet.location)
+    # if tweet.geo != None:
+        # print(tweet.text.encode('utf-8', errors='ignore'))
+
+    # if places[tweet.geo['place_id']]:
+        # place = places[tweet.geo['place_id']]
+        # print(place.full_name)
+
+
+'''
+import tweepy
+
+client = tweepy.Client(
+    consumer_key = "8k7SzAflvtcFmaqJsTiqzylYa",
+    consumer_secret = "qPqhLwP77RiuWRgLn8KKPscFLX6PQprPXtrYiaJLxH0Hpe2846",
+    access_token = "1517355964617297920-mOWbcyxo7Zr9SXsRN8nXIn9zrm2NpT",
+    access_token_secret = "zvJ7znhMV4ZmVG6fKl3t4w7e4McNUU7x8cCTGNympdwqD",
+)
+
+# Replace with your own search query
+query = 'covid -is:retweet place_country:US'
+
+tweets = client.search_all_tweets(query=query, tweet_fields=['context_annotations', 'created_at', 'geo'],
+                                  place_fields=['place_type', 'geo'], expansions='geo.place_id', max_results=100)
+
+# Get list of places from includes object
+places = {p["id"]: p for p in tweets.includes['places']}
+
+for tweet in tweets.data:
+    print(tweet.id)
+    print(tweet.text)
+    if places[tweet.geo['place_id']]:
+        place = places[tweet.geo['place_id']]
+        # filter: place.full_name = Melbourne
+        print(place.full_name)
+'''

@@ -47,6 +47,7 @@ class listener(tw.Stream):
                     
                 tf.write('\n')                
                 json.dump(json_data, tf)
+                tf.write(',')
                 print("==================================== succeed in writing file ====================================")
 
     

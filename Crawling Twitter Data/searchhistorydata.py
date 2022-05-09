@@ -1,5 +1,6 @@
 
 import tweepy
+import json
 
 consumer_key = "8k7SzAflvtcFmaqJsTiqzylYa"
 consumer_secret = "qPqhLwP77RiuWRgLn8KKPscFLX6PQprPXtrYiaJLxH0Hpe2846"
@@ -13,35 +14,40 @@ auth.set_access_token(access_token, access_token_secret)
 # set wait_on_rate_limit =True; as twitter may block you from querying if it finds you exceeding some limits
 api = tweepy.API(auth, wait_on_rate_limit = True)  
 
-search_words = ["covid"]
+# exclude retweets
+search_words = ["covid -filter:retweets", "coronavirus -filter:retweets"]
+
 
 tweets = tweepy.Cursor(api.search_tweets, q = search_words,
-                       geocode = "-37.840935, 144.946457, 1000km",
-                       lang = "en", result_type = "mixed").items(100)
+                       # geocode = "-37.840935, 144.946457, 40km",
+                       lang = "en", result_type = "popular").items(10)
+                       # max_id = 1523663926558289920
 ## the geocode is for India; format for geocode="lattitude,longitude,radius"
 ## radius should be in miles or km
 
 
 for tweet in tweets:
-    print("created_at: {}\nuser: {}\ntweet text: {}\ngeo_location: {}".
-            format(tweet.created_at, tweet.user.screen_name, tweet.text, tweet.user._json["geo_enabled"]))
+    # if (tweet.user.location == "Melbourne, Australia"):
+    print("created_at: {}\nid: {}\nuser: {}\ntweet text: {}\ngeo_location: {}".
+            format(tweet.created_at, tweet.id, tweet.user.screen_name, tweet.text, tweet.user.location))
     print("\n")
 # tweet.user.location will give you the general location of the user and not the particular location for the tweet itself, as it turns out, most of the users do not share the exact location of the tweet
 
 
 '''
+# only for academic access
 import tweepy as tw
 
 bearer_token = "AAAAAAAAAAAAAAAAAAAAACAQbwEAAAAAMMc5leYe2RxXTUO4xNKAhSp9DuI%3D3AI6uRezA6X1teJIzd0WYMh53nIjyE421lYPj4o9RPJNmEeRgY"
 client = tw.Client(bearer_token)
 
 query = 'covid -is:retweet'
-end_time = '2022-05-01T15:46:00Z'
+end_time = '2022-05-02T16:46:00Z'
 
 # print("-----------------------------------------------")
 response = client.search_recent_tweets(query = query, tweet_fields=['context_annotations', 'created_at', 'geo'], place_fields=['place_type', 'geo'], expansions='geo.place_id', end_time = end_time)
 print("-----------------------------------------------")
-# places = {p["id"]: p for p in response.includes['places']}
+places = {p["id"]: p for p in response.includes['places']}
 # print(response.meta)
 # print("-----------------------------------------------")
 
@@ -82,7 +88,7 @@ if not api:
 tweet_lst = []
 geoc = "-37.840935, 144.946457, 1000km"
 query = ["covid"]
-for tweet in tweepy.Cursor(api.search_tweets, geocode = geoc, q = query).items(1000):
+for tweet in tweepy.Cursor(api.search_tweets, geocode = geoc, q = query).items(10):
     tweetDate = tweet.created_at.date()
     if tweet.coordinates != None:
         tweet_lst.append([tweetDate,tweet.id,tweet.coordinates["coordinates"][0],

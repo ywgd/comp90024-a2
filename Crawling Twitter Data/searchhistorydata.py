@@ -1,4 +1,4 @@
-'''
+
 import tweepy
 
 consumer_key = "8k7SzAflvtcFmaqJsTiqzylYa"
@@ -13,11 +13,11 @@ auth.set_access_token(access_token, access_token_secret)
 # set wait_on_rate_limit =True; as twitter may block you from querying if it finds you exceeding some limits
 api = tweepy.API(auth, wait_on_rate_limit=True)    
 
-search_words = ["covid"]
+search_words = ["Covid"]
 
 tweets = tweepy.Cursor(api.search_tweets, q = search_words,
-                       # geocode = "-37.840935, 144.946457, lmi",
-                       lang = "en", result_type = "mixed").items(10)
+                       geocode = "-37.840935, 144.946457, 1000km",
+                       lang = "en", result_type = "mixed").items(10000)
 ## the geocode is for India; format for geocode="lattitude,longitude,radius"
 ## radius should be in miles or km
 
@@ -27,7 +27,6 @@ for tweet in tweets:
             format(tweet.created_at, tweet.user.screen_name, tweet.text, tweet.user.location))
     print("\n")
 # tweet.user.location will give you the general location of the user and not the particular location for the tweet itself, as it turns out, most of the users do not share the exact location of the tweet
-'''
 
 
 '''
@@ -59,7 +58,7 @@ for tweet in tweets:
         print(place.full_name)
 '''
 
-
+'''
 import sys
 import os
 import re
@@ -70,9 +69,10 @@ from tweepy import OAuthHandler
 
 consumer_key = "8k7SzAflvtcFmaqJsTiqzylYa"
 consumer_secret = "qPqhLwP77RiuWRgLn8KKPscFLX6PQprPXtrYiaJLxH0Hpe2846"
-access_token = "1517355964617297920-mOWbcyxo7Zr9SXsRN8nXIn9zrm2NpT"
-access_token_secret = "zvJ7znhMV4ZmVG6fKl3t4w7e4McNUU7x8cCTGNympdwqD"
+# access_token = "1517355964617297920-mOWbcyxo7Zr9SXsRN8nXIn9zrm2NpT"
+# access_token_secret = "zvJ7znhMV4ZmVG6fKl3t4w7e4McNUU7x8cCTGNympdwqD"
 
+#obtaining tweets within a certain distance from a specific location, and converting important attributes into a dataframe
 auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
 api = tweepy.API(auth, wait_on_rate_limit = True)
 if not api:
@@ -91,3 +91,4 @@ for tweet in tweepy.Cursor(api.search_tweets, geocode = geoc, q = query).items(1
                 tweet.user.name, tweet.text,
                 tweet.user._json["geo_enabled"]])
 tweet_df = pd.DataFrame(tweet_lst, columns=['tweet_dt', 'id', 'lat','long','username', 'name', 'tweet','geo'])
+'''

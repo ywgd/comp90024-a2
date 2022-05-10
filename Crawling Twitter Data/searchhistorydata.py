@@ -10,23 +10,14 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
 # set wait_on_rate_limit =True; as twitter may block you from querying if it finds you exceeding some limits
-# api = tweepy.API(auth, wait_on_rate_limit=True)
-api = tweepy.API(auth)
-
-# search_words = ["Covid"]
-# query = 'Covid'
-
-# tweets = tweepy.Cursor(api.search_tweets, q=query,
-#                        geocode="-37.840935,144.946457,1000km",
-#                        lang="en", result_type="mixed").items(5)
-
+api = tweepy.API(auth, wait_on_rate_limit=True)
 
 tweets = tweepy.Cursor(api.search_tweets,
                        q="covid OR coronavirus geocode:-37.840935,144.946457,40km -filter:retweets AND -filter:quote",
                        lang="en").items(10)
 
 # the geocode is for melbourne; format for geocode="latitude,longitude,radius"
-# radius should be in km
+# radius should be in km/mi
 
 for tweet in tweets:
     print("created_at: {}\nuser: {}\ntweet text: {}\ngeo_location: {}".

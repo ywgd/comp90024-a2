@@ -26,3 +26,28 @@ for tweet in tweets:
         tf.write('\n')
         json.dump(tweet._json, tf)
         tf.write(',')
+        
+        
+"""
+for tweet in tweets:
+    with open('recent_tweet_comma.json', 'a', encoding='utf-8') as tf:
+
+        has_text = True
+        if "text" not in tweet._json:
+            has_text = False
+
+        if has_text:
+            if "extended_tweet" in tweet._json:
+                print(tweet._json['text'])
+                print("================================")
+                temp_text = tweet._json['extended_tweet']['full_text']
+                tweet._json['text'] = temp_text
+                print(tweet._json['text'])
+            else:
+                print("No extended text")
+
+            tf.write('\n')
+            json.dump(tweet._json, tf)
+            tf.write(',')
+
+"""

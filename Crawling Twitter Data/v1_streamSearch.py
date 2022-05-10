@@ -1,54 +1,54 @@
 import tweepy as tw
 import json
 
-
 api_key= '8k7SzAflvtcFmaqJsTiqzylYa'
 api_key_secret= 'qPqhLwP77RiuWRgLn8KKPscFLX6PQprPXtrYiaJLxH0Hpe2846'
 access_token= '1517355964617297920-mOWbcyxo7Zr9SXsRN8nXIn9zrm2NpT'
 access_token_secret= 'zvJ7znhMV4ZmVG6fKl3t4w7e4McNUU7x8cCTGNympdwqD'
 
-
 class listener(tw.Stream):
 
     def on_data(self, data):
 
-        with open('twitterdata.json', 'a', encoding='utf-8') as tf:
+        with open('twitterdata_extended_done_comma.json', 'a', encoding='utf-8') as tf:
             json_data = json.loads(data)
 
             is_not_retweeted = False
             is_not_quoted = False
             has_place = False
-            if ("retweeted_status" not in json_data) and ('RT @' not in json_data['text']):
-                # this is for not retweeted only
-                is_not_retweeted = True
-            
-            if "quoted_status" not in json_data:
-                # this is for not quoted only
-                is_not_quoted = True
-            
-            if json_data['place'] != None:
-                # check if the value of place is None or not
-                has_place = True
+            has_text = True
 
-            if is_not_retweeted and is_not_quoted and has_place:
-                if "extended_tweet" in json_data:
-                    print("------------------ start extended ------------------")
-                    #print(json_data['extended_tweet'])
-                    #print("=====================================")
-                    temp_text = json_data['extended_tweet']['full_text']
-                    print(temp_text)
-                    print("=====================================")
-                    json_data['text'] = temp_text
-                    print(json_data['text'])
-                    print("------------------ end extended ------------------")                
-                    #print("Extended text: succeed!")
-                else:
-                    print("No extended text: succeed!")
-                    
-                tf.write('\n')                
-                json.dump(json_data, tf)
-                tf.write(',')
-                print("==================================== succeed in writing file ====================================")
+            # if there is no text: throw it away
+            if "text" not in json_data:
+                has_text = False
+
+            if has_text:
+                if ("retweeted_status" not in json_data) and ('RT @' not in json_data['text']):
+                    # this is for not retweeted only
+                    is_not_retweeted = True
+                
+                if "quoted_status" not in json_data:
+                    # this is for not quoted only
+                    is_not_quoted = True
+                
+                if ("place" in json_data) and json_data['place'] != None:
+                    # check if the value of place is None or not
+                    has_place = True
+
+                if is_not_retweeted and is_not_quoted and has_place:
+                    if "extended_tweet" in json_data:
+                        temp_text = json_data['extended_tweet']['full_text']
+                        json_data['text'] = temp_text             
+                        print("This tweet is with extended text.")
+                    else:
+                        print("This tweet do not have extended text.")
+
+
+                    #print(json_data)
+                    tf.write('\n')                
+                    json.dump(json_data, tf)
+                    tf.write(',')
+                    print("========================= succeed in writing file =========================")
 
     
     def on_error(self, status):
@@ -80,5 +80,4 @@ if __name__ == '__main__':
     finally:
         print('Streaming Finished.')
         stream.disconnect()
-
 

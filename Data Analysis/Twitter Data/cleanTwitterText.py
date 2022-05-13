@@ -43,9 +43,9 @@ for i in range(len(raw_tweets)):
     words = [word for word in stripped if word.isalpha()]
 
     words = [w for w in words if not w in stopwords]
-
     raw_tweets[i]['splitwords'] = words
 
-    
+    #words_string = " ".join(map(str, words))
+    #raw_tweets[i]['splitwords'] = words_string
 
-print(raw_tweets[1]['splitwords'])
+

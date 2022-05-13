@@ -10,12 +10,13 @@ from nltk.tokenize import word_tokenize
 stopwords = stopwords.words('english') # result is list
 
 #print(type(stopwords))
-
 #print(string.punctuation) # string
 
 with open('twitterdata_with_text.json','r',encoding="utf-8") as f:
     raw_tweets = json.load(f)
 
+
+# reference: https://machinelearningmastery.com/clean-text-machine-learning-python/
 for i in range(len(raw_tweets)):
     #raw_tweets[i]: dict
     
@@ -39,12 +40,13 @@ for i in range(len(raw_tweets)):
     table = str.maketrans('', '', string.punctuation)
     stripped = [w.translate(table) for w in tokens]
 
-    # remove remaining tokens that are not alphabetic
-    words = [word for word in stripped if word.isalpha()]
+    # reference for isascii(): https://note.nkmk.me/en/python-str-num-determine/
+    # remove remaining tokens that are not ASCII
+    words = [word for word in stripped if word.isascii()]
 
     words = [w for w in words if not w in stopwords]
     raw_tweets[i]['splitwords'] = words
-
+        
     #words_string = " ".join(map(str, words))
     #raw_tweets[i]['splitwords'] = words_string
 

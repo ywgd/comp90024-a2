@@ -1,6 +1,7 @@
 import re
 import json
 from textblob import TextBlob
+from matplotlib import pyplot as plt
 
 # tweet is the file we get after cleaning (cleanTwitterText.py)
 def tweet_sentiment(tweet):
@@ -18,7 +19,7 @@ def tweet_sentiment(tweet):
 
 if __name__ == "__main__":
 
-    with open('twitterdata_with_text.json','r',encoding="utf-8") as f:
+    with open('twitterdata_with_text.json', 'r', encoding="utf-8") as f:
         Twitter = json.load(f)
 
     tweets = []
@@ -44,7 +45,8 @@ if __name__ == "__main__":
             positive_tweet.append(tweet['sentiment'])
     positive_per = round((len(positive_tweet)/len(tweets)) * 100, 4)
     print("Positive tweets percentage: {} %".format(positive_per))
-    
+    # print(type(positive_per))
+
     negative_tweet = []
     for tweet in tweets:
         if tweet['sentiment'] == 'negative':
@@ -54,3 +56,10 @@ if __name__ == "__main__":
     
     neutral_per = round(100 - positive_per - negative_per, 4)
     print("Neutral tweets percentage: {} %".format(neutral_per))
+
+    labels = ["Positive", "Negative", "Neutral"]
+    data = [positive_per, negative_per, neutral_per]
+    fig = plt.figure(figsize = (10, 7))
+    plt.pie(data, labels = labels)
+    plt.title("The Pie Chart for Sentiment Analysis Result")
+    plt.show()

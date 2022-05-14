@@ -1,6 +1,7 @@
 import re
 import json
 import string
+import sys
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
@@ -15,6 +16,7 @@ stopwords = stopwords.words('english') # result is list
 with open('twitterdata_with_text.json','r',encoding="utf-8") as f:
     raw_tweets = json.load(f)
 
+#sys.stdout = open("use_for_mapper.txt", "a", encoding='utf-8')
 
 # reference: https://machinelearningmastery.com/clean-text-machine-learning-python/
 for i in range(len(raw_tweets)):
@@ -45,9 +47,13 @@ for i in range(len(raw_tweets)):
     words = [word for word in stripped if word.isascii()]
 
     words = [w for w in words if not w in stopwords]
-    raw_tweets[i]['splitwords'] = words
-        
-    #words_string = " ".join(map(str, words))
-    #raw_tweets[i]['splitwords'] = words_string
+    #raw_tweets[i]['splitwords'] = words
+
+    words_string = " ".join(map(str, words))
+    raw_tweets[i]['splitwords'] = words_string
+
+    # mapper part
+    for word in words_string.split():
+        print ('{0}\t{1}'.format(word, 1))
 
 

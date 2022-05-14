@@ -60,6 +60,6 @@ if __name__ == "__main__":
     labels = ["Positive", "Negative", "Neutral"]
     data = [positive_per, negative_per, neutral_per]
     fig = plt.figure(figsize = (10, 7))
-    plt.pie(data, labels = labels)
+    plt.pie(data, labels = labels, shadow = True, autopct = '%1.1f%%',startangle = 90)
     plt.title("The Pie Chart for Sentiment Analysis Result")
     plt.show()

@@ -52,7 +52,7 @@ for item in Twitter:
     # print()
     # jsonStr = '{' + '"username":' + '"' + tweet.user.screen_name + '"' + ',"tweet":' + '"' + tweet.text + '"' + '}'
     
-    db_entry = json.loads(item)
-    db.save(db_entry)
+    # db_entry = json.loads(item)
+    db.save(item)
     # dic = {"user": item["id"], "tweet":item['text']}
     # db.save(dic)

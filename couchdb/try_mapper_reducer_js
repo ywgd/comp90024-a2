@@ -1,0 +1,11 @@
+{
+  "_id": "_design/try_mapreduce",
+  "_rev": "1-1fc27877f8074a3199ba0084a062ca8b",
+  "views": {
+    "new-view": {
+      "reduce": "_count",
+      "map": "function (doc) {\n const words = doc.splitwords.split(\" \"); for (const word of words) {emit(word, 1);}\n}"
+    }
+  },
+  "language": "javascript"
+}

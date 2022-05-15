@@ -24,11 +24,24 @@
   "language": "javascript"
 }
 
-
+# mapper
 function (doc) {
-  const words = doc.splitwords.split(" ");
-  for (const word of words) {
-    emit(word, 1);
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      emit(word, 1)
+    }
+  }
+}
+
+
+# reducer
+function (keys, values, rereduce) {
+  if (rereduce) {
+    results = {'covid':0, 'death':0, 'unemployment':0, 'health':0, 'income':0}
+    return sum(values);
+  } else {
+    return values.length;
   }
 }
 

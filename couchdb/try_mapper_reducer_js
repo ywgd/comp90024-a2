@@ -23,3 +23,12 @@
   },
   "language": "javascript"
 }
+
+
+function (doc) {
+  const words = doc.splitwords.split(" ");
+  for (const word of words) {
+    emit(word, 1);
+  }
+}
+

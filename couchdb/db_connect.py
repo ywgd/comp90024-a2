@@ -31,8 +31,15 @@ api = tweepy.API(auth)
 # couchdb
 couch = couchdb.Server("http://admin:admin@172.26.134.18:5984/")
 
+dbname = "twitter_data"
+if dbname in couch:
+    db = couch["twitter_data"]
+else:
+    db = couch.create("twitter_data")
+    
+
 # db = couch.create("twitter_data")
-db = couch["twitter_data"]
+# db = couch["twitter_data"]
 print("Database Successfully Created.");  
 
 # print("ok")

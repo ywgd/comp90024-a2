@@ -19,13 +19,60 @@ function (keys, values, rereduce) {
   var income_matched = false
   if (rereduce) {
     for (var i = 0; i < values.length; i++) {
-      if (keys[i].includs("covid") || keys[i].includs("covid")) {
+      var w = keys[i]
+      if (w.includs("covid") || w.includs("covid")) {
+        covid_matched = true;
         results.covid += values[i].sum;
       }
+      
+      if (w.includes("die") || w.includes("dead") || w.includes("death")) {
+        death_matched = true;
+        results.death += values[i].sum;
+      }
+      
+      if (w.includes("unemployment") || w.includes("unemployed")) {
+        unemployment_matched = true;
+        results.unemployment += values[i].sum;
+      }
+      
+      if (w.includes("welfare") || w.includes("health") || w.includes("pensioners")) {
+        health_matched = true;
+        results.health += values[i].sum;
+      }
+      
+      if (w.includes("income")) {
+        income_matched = true;
+        results.income += values[i].sum;
+      }
+      
     }
     
-    return sum(values);
+    return results;
   } else {
-    return values.length;
+    for (var j = 0; j < values.length; j++) {
+      if (covid_matched === true) {
+        results.covid += values[j].sum;
+      }
+      
+      if (death_matched === true) {
+        results.death += values[j].sum;
+      }
+      
+      if (unemployment_matched === true) {
+        results.unemployment += values[j].sum;
+      }
+      
+      if (health_matched === true) {
+        results.health += values[j].sum;
+      }
+      
+      if (income_matched === true) {
+        results.income += values[j].sum;
+      }
+      
+      
+    }
+  
+    return results;
   }
 }

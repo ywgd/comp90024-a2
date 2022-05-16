@@ -1,0 +1,173 @@
+# mapper: DONE
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      emit(word, 1)
+    }
+  }
+}
+
+
+# reducer: HAVEN'T FINISHED
+function (keys, values, rereduce) {
+  var results = {'covid':0, 'death':0, 'unemployment':0, 'health':0, 'income':0}
+  var covid_matched = false
+  var death_matched = false
+  var unemployment_matched = false
+  var health_matched = false
+  var income_matched = false
+  if (rereduce) {
+    for (var i = 0; i < values.length; i++) {
+      var w = keys[i]
+      if (w.includs("covid") || w.includs("covid")) {
+        covid_matched = true;
+        results.covid += values[i].sum;
+      }
+      
+      if (w.includes("die") || w.includes("dead") || w.includes("death")) {
+        death_matched = true;
+        results.death += values[i].sum;
+      }
+      
+      if (w.includes("unemployment") || w.includes("unemployed")) {
+        unemployment_matched = true;
+        results.unemployment += values[i].sum;
+      }
+      
+      if (w.includes("welfare") || w.includes("health") || w.includes("pensioners")) {
+        health_matched = true;
+        results.health += values[i].sum;
+      }
+      
+      if (w.includes("income")) {
+        income_matched = true;
+        results.income += values[i].sum;
+      }
+      
+    }
+    
+    return results;
+  } else {
+    for (var j = 0; j < values.length; j++) {
+      if (covid_matched === true) {
+        results.covid += values[j].sum;
+      }
+      
+      if (death_matched === true) {
+        results.death += values[j].sum;
+      }
+      
+      if (unemployment_matched === true) {
+        results.unemployment += values[j].sum;
+      }
+      
+      if (health_matched === true) {
+        results.health += values[j].sum;
+      }
+      
+      if (income_matched === true) {
+        results.income += values[j].sum;
+      }
+      
+      
+    }
+  
+    return results;
+  }
+}
+
+
+################################################# stupid version #################################################
+# covid_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('covid') !== -1 || word.indexOf('coronavirus') !== -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+# death_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('die') !== -1 || word.indexOf('dead') !== -1 || word.indexOf('death') != -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+# unemployment_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('unemployed') !== -1 || word.indexOf('unemployment') !== -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+# health_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('welfare') !== -1 || word.indexOf('health') !== -1 || word.indexOf('pensioners') != -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+# income_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('income') !== -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+
+# combine to one mapper func: full_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('covid') !== -1 || word.indexOf('coronavirus') !== -1) {
+        emit("covid", 1)
+      }
+      
+      if (word.indexOf('die') !== -1 || word.indexOf('dead') !== -1 || word.indexOf('death') != -1) {
+        emit("death", 1)
+      }
+      
+      if (word.indexOf('unemployed') !== -1 || word.indexOf('unemployment') !== -1) {
+        emit("unemployment", 1)
+      }
+      
+      if (word.indexOf('welfare') !== -1 || word.indexOf('health') !== -1 || word.indexOf('pensioners') != -1) {
+        emit("health", 1)
+      }
+      
+      if (word.indexOf('income') !== -1) {
+        emit("income", 1)
+      }
+      
+      emit("total_word", 1)
+      
+    }
+  }
+}
+

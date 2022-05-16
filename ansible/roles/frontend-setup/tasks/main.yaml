@@ -1,0 +1,16 @@
+---
+# Clone source code
+- name: Clone the code
+  git:
+    repo: "https://github.com/ywgd/comp90024-a2.git"
+    dest: /home/ubuntu/comp90024-a2
+    clone: yes
+  become: true
+
+
+
+- name: Run front-end
+  shell: |
+    cd /home/ubuntu/comp90024-a2/front-end
+    sudo chmod +x builddocker.sh
+    sudo ./builddocker.sh

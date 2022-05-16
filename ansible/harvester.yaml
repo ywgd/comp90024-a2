@@ -1,0 +1,8 @@
+# Set up harvester
+- hosts: Harvester
+  vars_files:
+    - host_vars/harvester.yaml
+  gather_facts: true
+
+  roles:
+    - role: harvester-setup

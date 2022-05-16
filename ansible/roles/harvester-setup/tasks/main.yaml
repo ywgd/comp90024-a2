@@ -1,0 +1,18 @@
+---
+# Clone source code
+- name: Clone the code
+  git:
+    repo: "https://github.com/ywgd/comp90024-a2.git"
+    dest: /home/ubuntu/comp90024-a2
+    clone: yes
+  become: true
+
+- name: Run twitter harvester
+  shell: |
+    pip install couchdb
+    pip install tweepy
+    cd /home/ubuntu/comp90024-a2/CrawlingData
+    chmod +x StreamTwitter.py
+    chmod +x harvest.sh
+    ./harvest.sh
+  become: true

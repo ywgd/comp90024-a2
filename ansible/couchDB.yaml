@@ -1,0 +1,20 @@
+# Build couchdb
+- hosts: CouchDB
+  vars_files:
+    - host_vars/couchdb_settings.yaml
+  gather_facts: true
+
+  roles:
+    - role: nodes-common
+    - role: nodes-docker-install
+    - role: nodes-volume-mount
+    - role: couchdb-setup
+
+# Setup CouchDB cluster
+- hosts: CouchDB:!Masternode
+  vars_files:
+    - host_vars/couchdb_settings.yaml
+  gather_facts: true
+
+  roles:
+    - role: couchdb-cluster

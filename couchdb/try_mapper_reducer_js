@@ -140,7 +140,7 @@ function (doc) {
 }
 
 
-# combine to one mapper func:
+# combine to one mapper func: full_view
 function (doc) {
   var words = doc.splitwords.split(" ");
   for (var word of words) {
@@ -165,8 +165,9 @@ function (doc) {
         emit("income", 1)
       }
       
+      emit("total_word", 1)
+      
     }
   }
 }
-
 

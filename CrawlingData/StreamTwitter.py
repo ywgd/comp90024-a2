@@ -16,12 +16,11 @@ class listener(tw.Stream):
 
     def on_data(self, data):
 
-        print(data)
-
         json_data = json.loads(data)
         #id = json_data['id']
-
+        
         db.save(json_data)
+        print("save data to db")
 
         # with open('twitterdata_extended_done_comma.json', 'a', encoding='utf-8') as tf:
         #     json_data = json.loads(data)

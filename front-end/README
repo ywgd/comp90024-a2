@@ -1,0 +1,22 @@
+<body marginheight="0" data-new-gr-c-s-check-loaded="14.1060.0" data-gr-ext-installed=""><h6>Environment</h6>
+<p>Docker version 20.10.16
+
+</p>
+<h6>Deploy step</h6>
+<ol>
+<li>Build dockerfile and tag image as a2:group<pre><code> sudo docker build -t a2:group .</code></pre>
+</li>
+</ol>
+<ol>
+<li><p>list images to check</p>
+<pre><code> sudo docker images</code></pre>
+</li>
+<li><p>Run the image as a container ‘nginx_php’</p>
+<pre><code> sudo docker run -it -d -v $PWD/var/www/html -p 80:80 --name nginx_php a2:group</code></pre>
+</li>
+</ol>
+<ol>
+<li>list the running containers to check<pre><code> sudo docker ps</code></pre>
+</li>
+</ol>
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

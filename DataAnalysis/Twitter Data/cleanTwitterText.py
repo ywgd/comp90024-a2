@@ -29,7 +29,7 @@ def cleanText(raw_tweets):
     words = [word for word in stripped if word.isascii()]
 
     words = [w for w in words if not w in stopwords]
-    raw_tweets['splitwords'] = words
+    #raw_tweets['splitwords'] = words
 
     words_string = " ".join(map(str, words))
     raw_tweets['splitwords'] = words_string

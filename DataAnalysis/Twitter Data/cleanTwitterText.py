@@ -25,7 +25,6 @@ def cleanText(raw_tweets):
     table = str.maketrans('', '', string.punctuation)
     stripped = [w.translate(table) for w in tokens]
 
-    # reference for isascii(): https://note.nkmk.me/en/python-str-num-determine/
     # remove remaining tokens that are not ASCII
     words = [word for word in stripped if word.isascii()]
 

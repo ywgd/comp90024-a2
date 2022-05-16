@@ -76,3 +76,97 @@ function (keys, values, rereduce) {
     return results;
   }
 }
+
+
+################################################# stupid version #################################################
+# covid_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('covid') !== -1 || word.indexOf('coronavirus') !== -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+# death_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('die') !== -1 || word.indexOf('dead') !== -1 || word.indexOf('death') != -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+# unemployment_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('unemployed') !== -1 || word.indexOf('unemployment') !== -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+# health_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('welfare') !== -1 || word.indexOf('health') !== -1 || word.indexOf('pensioners') != -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+# income_view
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('income') !== -1) {
+        emit(word, 1)
+      }
+    }
+  }
+}
+
+
+# combine to one mapper func:
+function (doc) {
+  var words = doc.splitwords.split(" ");
+  for (var word of words) {
+    if (word.trim().length !== 0) {
+      if (word.indexOf('covid') !== -1 || word.indexOf('coronavirus') !== -1) {
+        emit("covid", 1)
+      }
+      
+      if (word.indexOf('die') !== -1 || word.indexOf('dead') !== -1 || word.indexOf('death') != -1) {
+        emit("death", 1)
+      }
+      
+      if (word.indexOf('unemployed') !== -1 || word.indexOf('unemployment') !== -1) {
+        emit("unemployment", 1)
+      }
+      
+      if (word.indexOf('welfare') !== -1 || word.indexOf('health') !== -1 || word.indexOf('pensioners') != -1) {
+        emit("health", 1)
+      }
+      
+      if (word.indexOf('income') !== -1) {
+        emit("income", 1)
+      }
+      
+    }
+  }
+}
+
+

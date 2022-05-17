@@ -4,12 +4,6 @@
 
 http://172.26.133.113
 
-## Videos
-
-Deployment: https://www.youtube.com/watch?v=chCRkiTB47c
-
-Demonstration of Data Analysis and Frontend: https://youtu.be/6vmVhV8YoE8
-
 ## Repository Structure
 
 ```

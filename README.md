@@ -6,9 +6,9 @@ http://172.26.133.113
 
 ## Videos
 
-Deployment:
+Deployment: https://www.youtube.com/watch?v=chCRkiTB47c
 
-Frontend: 
+Demonstration: 
 
 ## Repository Structure
 
